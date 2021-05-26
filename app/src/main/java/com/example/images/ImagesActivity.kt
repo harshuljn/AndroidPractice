@@ -17,7 +17,6 @@ class ImagesActivity : AppCompatActivity() {
     }
 
     private fun getImagesUrl(url: String?) {
-//        val textView = findViewById<TextView>(R.id.passed_data)
         val queue = Volley.newRequestQueue(this)
 
         val jsonArrayRequest = JsonArrayRequest(Request.Method.GET, url, null,
@@ -26,15 +25,11 @@ class ImagesActivity : AppCompatActivity() {
                     response.getString(it)
                 }
                 val imagesList = findViewById<ListView>(R.id.image_list)
-                val listAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, url_list)
-                imagesList.adapter = listAdapter
 
-                val testImageView = findViewById<ImageView>(R.id.testImageView)
-                Glide.with(this).load(url_list[0])
-                    .into(testImageView);
+                val listAdapter = ImagesAdapter(url_list)
+                imagesList.adapter = listAdapter
             },
             {})
-
         queue.add(jsonArrayRequest)
     }
 }
